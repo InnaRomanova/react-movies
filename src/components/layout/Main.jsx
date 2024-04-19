@@ -20,20 +20,30 @@ class Main extends React.Component {
     componentDidMount() {
         //http://www.omdbapi.com/?i=tt3896198&apikey=9141aace
         //fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
-         fetch(`http://www.omdbapi.com/?apikey=78584b3c&s=matrix`)
+         fetch(`https://www.omdbapi.com/?apikey=78584b3c&s=${''}`)
             .then((response) => response.json())
             //обращаемся к setState и сообщаем, что необходимо положить в data Search
             .then(data => this.setState({ movies: data.Search, Loading: false }))
+              //обработка ошибки
+            .catch((err) => {
+                console.error(err);
+                this.setState({ Loading: false })
+            })
     }
 
     searchMovies = (str, type = 'all') => {
         this.setState({Loading: true});
        // fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
         //fetch(`http://www.omdbapi.com/?apikey=78584b3c&s=matrix`)    
-        fetch(`http://www.omdbapi.com/?apikey=78584b3c&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
+        fetch(`https://www.omdbapi.com/?apikey=78584b3c&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
         .then((response) => response.json())
             //обращаемся к setState и сообщаем, что необходимо положить в data Search
             .then(data => this.setState({ movies: data.Search, Loading: false }))
+            //обработка ошибки
+            .catch((err) => {
+                console.error(err);
+                this.setState({ Loading: false })
+            })
     }
 
     render() {
